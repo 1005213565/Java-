@@ -9,7 +9,6 @@ class Tank { // 对坦克类实行监听
 	int x = 0;
 	int y = 0;
 
-	
 	// 坦克方向
 	int direction = 0;
 
@@ -51,9 +50,158 @@ class EnemyTank extends Tank implements Runnable {
 	Vector<Shot> vector = new Vector<Shot>();
 	// 敌人添加子弹，应该放在敌人刚创建坦克，和敌人的坦克子弹死亡后
 
+	// 定义一个向量，可以访问到MyPanel上的所有敌人坦克
+	Vector<EnemyTank> vectorET = new Vector<EnemyTank>();
+
 	public EnemyTank(int x, int y) {
 		super(x, y);
 
+	}
+
+	// 得到MyPanel的敌人坦克向量
+	public void setETs(Vector<EnemyTank> vector) {
+		this.vectorET = vector;
+	}
+
+	// 判断是否碰到了别人的坦克
+	public boolean isTouchOtherEnemy() {
+		boolean b = false; // 初始值是没有碰到
+		switch (this.direction) {
+		case 0: {
+			// 取出所有的敌人坦克
+			for (int i = 0; i < this.vectorET.size(); i++) {
+				// 取出坦克
+				EnemyTank enemyTank = this.vectorET.get(i);
+				if (enemyTank != this) { // 判断此坦克不是他自己
+
+					if (enemyTank.direction == 0 || enemyTank.direction == 1) {
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 20 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 30) {
+							return true;
+						}
+						if (this.x + 20 >= enemyTank.x && this.x + 20 <= enemyTank.x + 20 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 30) {
+							return true;
+						}
+					}
+					if (enemyTank.direction == 2 || enemyTank.direction == 3) {
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 30 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 20) {
+							return true;
+						}
+						if (this.x + 20 >= enemyTank.x && this.x + 20 <= enemyTank.x + 30 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 20) {
+							return true;
+						}
+					}
+
+				}
+			}
+		}
+			break;
+		case 1: { // 我的坦克向上或者向下
+					// 取出所有的敌人坦克
+			for (int i = 0; i < this.vectorET.size(); i++) {
+				// 取出坦克
+				EnemyTank enemyTank = this.vectorET.get(i);
+				if (enemyTank != this) { // 判断此坦克不是他自己
+
+					if (enemyTank.direction == 0 || enemyTank.direction == 1) {
+
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 20 && this.y + 30 >= enemyTank.y
+								&& this.y + 30 <= enemyTank.y + 30) {
+							return true;
+						}
+
+						if (this.x + 20 >= enemyTank.x && this.x + 20 <= enemyTank.x + 20 && this.y + 30 >= enemyTank.y
+								&& this.y + 30 <= enemyTank.y + 30) {
+							return true;
+						}
+					}
+					if (enemyTank.direction == 3 || enemyTank.direction == 2) {
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 30 && this.y + 30 >= enemyTank.y
+								&& this.y + 30 <= enemyTank.y + 20) {
+							return true;
+						}
+
+						if (this.x + 20 >= enemyTank.x && this.x + 20 <= enemyTank.x + 30 && this.y + 30 >= enemyTank.y
+								&& this.y + 30 <= enemyTank.y + 20) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+			break;
+		case 2: {
+			for (int i = 0; i < this.vectorET.size(); i++) {
+				// 取出坦克
+				EnemyTank enemyTank = this.vectorET.get(i);
+				if (enemyTank != this) { // 判断此坦克不是他自己
+					if (enemyTank.direction == 0 || enemyTank.direction == 1) {
+					
+						if (this.x + 30 >= enemyTank.x && this.x + 30 <= enemyTank.x + 20 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 30) {
+							return true;
+						}
+				
+						if (this.x + 30 >= enemyTank.x && this.x + 30 <= enemyTank.x + 20 && this.y + 20 >= enemyTank.y
+								&& this.y + 20 <= enemyTank.y + 30) {
+							return true;
+						}
+					}
+					if (enemyTank.direction == 3 || enemyTank.direction == 2) {
+						if (this.x + 30 >= enemyTank.x && this.x + 30 <= enemyTank.x + 30 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 20) {
+							return true;
+						}
+						if (this.x + 30 >= enemyTank.x && this.x + 30 <= enemyTank.x + 30 && this.y + 20 >= enemyTank.y
+								&& this.y + 20 <= enemyTank.y + 20) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+			break;
+		case 3: {
+			for (int i = 0; i < this.vectorET.size(); i++) {
+				// 取出坦克
+				EnemyTank enemyTank = this.vectorET.get(i);
+				if (enemyTank != this) { // 判断此坦克不是他自己
+					if (enemyTank.direction == 0 || enemyTank.direction == 1) {
+					
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 20 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 30) {
+							return true;
+						}
+						
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 20 && this.y + 20 >= enemyTank.y
+								&& this.y + 20 <= enemyTank.y + 30) {
+							return true;
+						}
+					}
+					if (enemyTank.direction == 3 || enemyTank.direction == 2) {
+						
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 30 && this.y >= enemyTank.y
+								&& this.y <= enemyTank.y + 20) {
+							return true;
+						}
+						if (this.x >= enemyTank.x && this.x <= enemyTank.x + 30 && this.y + 20 >= enemyTank.y
+								&& this.y + 20 <= enemyTank.y + 20) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+			break;
+
+		default:
+			break;
+		}
+		System.out.println("b=" + b);
+		return b;
 	}
 
 	public void directDownMove() {
@@ -80,7 +228,7 @@ class EnemyTank extends Tank implements Runnable {
 			// 让坦克随机产生一个新的方向
 			this.direction = (int) (Math.random() * 4);
 			try {
-				Thread.sleep(500);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -96,7 +244,7 @@ class EnemyTank extends Tank implements Runnable {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if (this.y > 0) { // 控制坦克移动的范围
+					if (this.y > 0 && !this.isTouchOtherEnemy()) { // 控制坦克移动的范围
 						this.directUpMove();
 					}
 					// System.out.println("向上移动="+direction);
@@ -113,7 +261,7 @@ class EnemyTank extends Tank implements Runnable {
 						e.printStackTrace();
 					}
 
-					if (this.y < 300) { // 控制坦克移动的范围
+					if (this.y < 300 && !this.isTouchOtherEnemy()) { // 控制坦克移动的范围
 						this.directDownMove();
 					}
 					// System.out.println("向下移动="+direction);
@@ -131,7 +279,7 @@ class EnemyTank extends Tank implements Runnable {
 						e.printStackTrace();
 					}
 
-					if (this.x > 0) { // 控制坦克移动的范围
+					if (this.x > 0 && !this.isTouchOtherEnemy()) { // 控制坦克移动的范围
 						this.directLeftMove();
 					}
 					// System.out.println("向左移动="+direction);
@@ -149,7 +297,7 @@ class EnemyTank extends Tank implements Runnable {
 						e.printStackTrace();
 					}
 
-					if (this.x < 400) { // 控制坦克移动的范围
+					if (this.x < 400 && !this.isTouchOtherEnemy()) { // 控制坦克移动的范围
 						this.directRightMove();
 					}
 					// System.out.println("向右移动="+direction);
@@ -172,7 +320,7 @@ class EnemyTank extends Tank implements Runnable {
 			if (this.isLive) {
 				if (this.vector.size() < 5) { // 没有子弹了(敌人的坦克发子弹最多发4颗)
 
-					System.out.println("子弹的数量=" + this.vector.size());
+					// System.out.println("子弹的数量=" + this.vector.size());
 					Shot shot = null;
 					switch (this.direction) {
 					case 0: {

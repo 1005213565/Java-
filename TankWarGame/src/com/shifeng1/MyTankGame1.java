@@ -11,7 +11,11 @@
  * 8.控制坦克在一定范围内移动
  * 9.当敌人的坦克击中我的坦克的时候，我的坦克爆炸
  * 10.设置我的坦克数量，并且死亡之后，继续出击，直到没有为止
- * 11.控制敌人的坦克不重叠
+ * 11.控制敌人的坦克不重叠 *
+ * 12.可以分关打游戏 *
+ * 13.可以在玩游戏的时候暂停和继续 *
+ * 14.可以记录玩家的成绩 *
+ * 15.java如何操作声音文件 *
  * */
 
 package com.shifeng1;
@@ -32,7 +36,7 @@ public class MyTankGame1 extends JFrame {
 		// TODO Auto-generated method stub
 		MyTankGame1 myTankGame1 = new MyTankGame1();
 	}
-
+    
 	// 构造函数
 	public MyTankGame1() {
 		mPanel = new MyPanel();
@@ -62,7 +66,7 @@ class MyPanel extends JPanel implements KeyListener, Runnable {
 	// 定义敌人的坦克集合
 	Vector<EnemyTank> vectorET = new Vector<EnemyTank>();
 	// 敌人坦克数量
-	int etNumber = 6;
+	int etNumber = 12;
   
 	// 定义炸弹集合
 	Vector<Bomb> bombs = new Vector<Bomb>();
@@ -91,6 +95,9 @@ class MyPanel extends JPanel implements KeyListener, Runnable {
 			EnemyTank enemyTank = new EnemyTank((i + 1) * 50, 0);
 			enemyTank.direction = (int) (Math.random() * 4); // 给敌人的坦克开始一个随机方向
 			enemyTank.color = 1;
+			// 将敌人坦克的数组交给敌人坦克的属性数组
+			enemyTank.setETs(vectorET);
+			
 			// 启动敌人坦克
 			Thread thread = new Thread(enemyTank);
 			thread.start();
@@ -127,6 +134,7 @@ class MyPanel extends JPanel implements KeyListener, Runnable {
 			thread2.start();
 
 			vectorET.add(enemyTank);
+			
 		}
 
 		try {
@@ -384,19 +392,19 @@ class MyPanel extends JPanel implements KeyListener, Runnable {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) { // 坦克向下跑
 			hero.direction = 1;
 			hero.directDownMove();
-			System.out.println("我的坦克向下跑");
+//			System.out.println("我的坦克向下跑");
 		} else if (e.getKeyCode() == KeyEvent.VK_UP) { // 坦克向上跑
 			hero.direction = 0;
 			hero.directUpMove();
-			System.out.println("我的坦克向上跑");
+//			System.out.println("我的坦克向上跑");
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) { // 坦克向左
 			hero.direction = 2;
 			hero.directLeftMove();
-			System.out.println("我的坦克向左跑");
+//			System.out.println("我的坦克向左跑");
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) { // 坦克向右
 			hero.direction = 3;
 			hero.directRightMove();
-			System.out.println("我的坦克向右跑");
+//			System.out.println("我的坦克向右跑");
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_J) { // 点击j键（一遍跑一遍发子弹）
@@ -404,7 +412,7 @@ class MyPanel extends JPanel implements KeyListener, Runnable {
 			if (this.hero.vector.size() < 5) { // 当子弹发了5颗之后就不能发了
 				// 开火
 				hero.shotEnemy();
-				System.out.println("开火");
+//				System.out.println("开火");
 			}
 		}
 		this.repaint();
